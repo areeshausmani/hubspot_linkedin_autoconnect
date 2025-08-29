@@ -1,6 +1,13 @@
-# HubSpot to LinkedIn Auto-Connect with GPT-4o
+# HubSpot to LinkedIn Auto-Connect with GPT-4o (Built with Make.com)
 
-This workflow automates sending personalized LinkedIn connection requests using contact data from HubSpot CRM and GPT-4o to craft a short message.
+This workflow is built in **Make.com** to automate sending personalized LinkedIn connection requests.  
+HubSpot contact data is processed with GPT-4o to craft a short note, and Puppeteer sends the request automatically.
+
+## Tools and Integrations
+- **Make.com** — workflow orchestration  
+- **HubSpot CRM** — lead data source  
+- **OpenAI GPT-4o** — AI message generation  
+- **Puppeteer** — browser automation for LinkedIn actions
 
 ---
 
@@ -18,13 +25,7 @@ This workflow automates sending personalized LinkedIn connection requests using 
 
 ---
 
-## Tools and Integrations
 
-- **HubSpot CRM** — contact source  
-- **OpenAI GPT-4o** — AI message generation  
-- **Puppeteer** — browser automation to send the invitation  
-
----
 
 ## Why I built this
 
