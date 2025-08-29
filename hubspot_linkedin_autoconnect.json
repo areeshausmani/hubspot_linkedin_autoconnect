@@ -1,0 +1,75 @@
+{
+  "name": "HubSpot to LinkedIn Auto-Connect with GPT-4o",
+  "flow": [
+    {
+      "id": 1,
+      "module": "hubspotcrm:getContact",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": "areeshausmani93_connection",
+        "parseCustomFields": true
+      },
+      "mapper": {
+        "id": "{{contact.id}}",
+        "email": "{{contact.email}}",
+        "firstname": "{{contact.firstname}}",
+        "lastname": "{{contact.lastname}}",
+        "jobtitle": "{{contact.jobtitle}}",
+        "company": "{{contact.company}}",
+        "linkedin_url": "{{contact.linkedin_url}}"
+      },
+      "metadata": {
+        "designer": { "x": 0, "y": 200 }
+      }
+    },
+    {
+      "id": 2,
+      "module": "openai-gpt-3:CreateCompletion",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "areeshausmani93_connection"
+      },
+      "mapper": {
+        "model": "chatgpt-4o-latest",
+        "temperature": "0.7",
+        "max_tokens": "200",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert at writing concise LinkedIn connection notes."
+          },
+          {
+            "role": "user",
+            "content": "Write a <300 char LinkedIn note to connect with {{1.firstname}} {{1.lastname}}, {{1.jobtitle}} at {{1.company}}. Focus on value, no greetings, no sign-off."
+          }
+        ]
+      },
+      "metadata": {
+        "designer": { "x": 300, "y": 200 }
+      }
+    },
+    {
+      "id": 3,
+      "module": "custom-js:runPuppeteer",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "areeshausmani93_connection"
+      },
+      "mapper": {
+        "linkedin_url": "{{1.linkedin_url}}",
+        "message": "{{2.choices[].message.content}}"
+      },
+      "metadata": {
+        "designer": { "x": 600, "y": 200, "name": "Send LinkedIn Connect" }
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "autoCommit": true
+    },
+    "zone": "us2.make.com"
+  }
+}
